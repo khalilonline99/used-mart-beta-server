@@ -19,10 +19,20 @@ async function run() {
         const categoryCollection = client.db("usedMart").collection("categories");
 
 
-
+        //categories in home
         app.get('/categories', async (req, res) => {
             const query = {};
             const result = categoryCollection.find(query);
+            const productsByCategory = await result.toArray()
+            res.send(productsByCategory);
+
+        })
+
+        // after clicking to the category
+        app.get('/categories/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = {category: id};
+            const result = productCollection.find(query);
             const productsByCategory = await result.toArray()
             res.send(productsByCategory);
 
